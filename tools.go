@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	apitools "stackoverkill/api-tools"
 
 	"github.com/labstack/echo/v4"
 )
@@ -35,16 +36,15 @@ func ToolPages(c echo.Context) error {
 
 func ToolApi(c echo.Context) error {
 	slug := c.Param("slug")
-	apiContent, err := os.ReadFile("./tool/" + slug + ".json")
-	if err != nil {
-		fmt.Println(err.Error())
-		return err
-	}
-	return c.JSON(http.StatusOK, apiContent)
+	tool := ToolFactory(slug)
+	return tool.Handle(c)
 }
 
 func ToolFactory(name string) Tool {
+	mpg := &apitools.MemorablePasswordGenerator{}
 	switch name {
+	case mpg.Name():
+        return &apitools.MemorablePasswordGenerator{}
 	default:
 		return nil
 	}
