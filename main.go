@@ -4,17 +4,17 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"zacharyironside.com/pages"
 )
 
 func main() {
 	e := echo.New()
-	e.GET("/", pages.IndexPage)
-	e.GET("/blog", pages.BlogPage)
-	e.GET("/tool", pages.ToolPage)
+	e.GET("/", IndexPage)
+	e.GET("/blog", BlogPage)
+	e.GET("/tool", ToolPage)
 	e.GET("/blog/:slug", BlogPages)
 	e.GET("/tool/:slug", ToolPages)
-	e.POST("/time", func (c echo.Context) error {
+	e.GET("/ap/tool/:slug", ToolApi)
+	e.POST("/time", func(c echo.Context) error {
 		return c.String(http.StatusOK, "the time")
 	})
 	e.Static("/static", "assets")
